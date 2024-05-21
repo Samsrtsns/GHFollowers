@@ -60,7 +60,7 @@ class FollowersListVC: UIViewController {
         // CollectionView'de kullanılacak hücreyi kaydeder
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
-
+ 
     /// Takipçileri aldığımız fonksiyon
     func getFollowers(username: String , page : Int) {
         showLoadingView()
@@ -75,6 +75,15 @@ class FollowersListVC: UIViewController {
                 if followers!.count < 100 {self.hasMoreFollowers = false}
                 // Takipçileri yazdırır
                 self.followers.append(contentsOf: followers!)
+                
+                if self.followers.isEmpty {
+                    let message = "This user doesn't have any followers.Go follow them 😄. "
+                    DispatchQueue.main.async {
+                        self.showEmptyStateView(with: message, in: self.view )
+                    }
+                    return
+                }
+                
                 self.updateData()
                 //print(followers!)
                 // Hata olursa
