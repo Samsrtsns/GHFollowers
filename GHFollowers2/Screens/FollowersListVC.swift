@@ -15,6 +15,7 @@ class FollowersListVC: UIViewController {
     var username: String!
     //Takipçileri tutan bir liste
     var followers : [Follower] = []
+    var filteredFollowers : [Follower] = []
     var page = 1
     // CollectionView nesnesini tutan değişken
     var collectionView: UICollectionView!
@@ -26,6 +27,7 @@ class FollowersListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
+        configureSearchController()
         configureCollectionView()
         getFollowers(username: username, page: page)
         configureDataSource()
@@ -47,6 +49,8 @@ class FollowersListVC: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     
+    // MARK: Configure Collection View
+    
     /// CollectionView nesnesi oluşturup register ve genel özelliklerini belirleyen bir fonksiyon
     func configureCollectionView() {
         // CollectionView'i oluşturur ve çerçevesini view'in sınırlarına göre ayarlar
@@ -60,7 +64,18 @@ class FollowersListVC: UIViewController {
         // CollectionView'de kullanılacak hücreyi kaydeder
         collectionView.register(FollowerCell.self, forCellWithReuseIdentifier: FollowerCell.reuseID)
     }
+    
+    func configureSearchController(){
+        let searchController                                    = UISearchController()
+        searchController.searchResultsUpdater                   = self
+        searchController.searchBar.delegate                     = self
+        searchController.searchBar.placeholder                  = "Search for a username"
+        searchController.obscuresBackgroundDuringPresentation   = false
+        navigationItem.searchController                         = searchController
+    }
  
+    // MARK: Network Function
+    
     /// Takipçileri aldığımız fonksiyon
     func getFollowers(username: String , page : Int) {
         showLoadingView()
@@ -84,7 +99,7 @@ class FollowersListVC: UIViewController {
                     return
                 }
                 
-                self.updateData()
+                self.updateData(on: self.followers)
                 //print(followers!)
                 // Hata olursa
                 case .failure(let error):
@@ -93,6 +108,8 @@ class FollowersListVC: UIViewController {
             }
         }
     }
+    
+    // MARK: CollectionView Data Source
     
     /// UICollectionView'unuzun veri kaynağını (data source) yapılandırmak için kullanılır. Bu fonksiyon, UICollectionViewDiffableDataSource'u ayarlayarak koleksiyon görünümünüzün nasıl veri göstereceğini belirler.
     func configureDataSource() {
@@ -107,8 +124,10 @@ class FollowersListVC: UIViewController {
         })
     }
     
+    // MARK: Snapshot
+    
     /// veri kaynağınızı güncellemek ve yeni verilerle koleksiyon görünümünüzü yeniden yüklemek için kullanılır.
-    func updateData() {
+    func updateData(on followers: [Follower]) {
         // Yeni bir NSDiffableDataSourceSnapshot oluşturur
         var snapshot = NSDiffableDataSourceSnapshot<Section, Follower>()
         
@@ -149,3 +168,15 @@ extension FollowersListVC: UICollectionViewDelegate {
     }
 }
 
+extension FollowersListVC: UISearchResultsUpdating , UISearchBarDelegate {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let filter = searchController.searchBar.text, !filter.isEmpty else { return }
+       
+        filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased())}
+        updateData(on: filteredFollowers)
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        updateData(on: followers)
+    }
+}
