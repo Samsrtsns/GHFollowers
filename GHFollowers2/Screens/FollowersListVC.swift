@@ -174,9 +174,11 @@ extension FollowersListVC: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        // Arama yaptığımızda hangi array aktif olacak ve ona göre tıklama işlemi yapılacak kontrolğ
         let activeArray = isSearching ? filteredFollowers : followers
         let follower = activeArray[indexPath.item]
         
+        // UserInfo screen için nesne
         let destVC = UserInfoVC()
         
         destVC.username = follower.login
