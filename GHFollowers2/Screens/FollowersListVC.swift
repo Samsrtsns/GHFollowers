@@ -198,7 +198,7 @@ extension FollowersListVC: UISearchResultsUpdating , UISearchBarDelegate {
         filteredFollowers = followers.filter { $0.login.lowercased().contains(filter.lowercased())}
         updateData(on: filteredFollowers)
     }
-    
+    //func
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         isSearching = false
         updateData(on: followers)
