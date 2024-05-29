@@ -18,6 +18,7 @@ class GFUserInfoHeaderVC: UIViewController {
     let locationLabel = GFSecondaryTitleLabel(fontSize: 18) // Konum etiketi
     let bioLabel = GFBodyLabel(textAlignment: .left) // Biyografi etiketi
     
+    
     var user: User! // Kullanıcı verilerini tutan User nesnesi
     
     // Kullanıcı nesnesini kabul eden özel başlatıcı

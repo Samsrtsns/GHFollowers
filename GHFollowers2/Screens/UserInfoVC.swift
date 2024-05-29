@@ -30,6 +30,8 @@ class UserInfoVC: UIViewController {
         navigationItem.rightBarButtonItem = doneButton  // 'done' butonunu sağ bar buton öğesi olarak ayarla
     }
     
+    // MARK: Network
+    
     // Bu metod, ağ üzerinden kullanıcı bilgilerini alır.
     func getUserInfo(){
         NetworkManager.shared.getUserInfo(for: username) { [weak self] result in
@@ -46,6 +48,8 @@ class UserInfoVC: UIViewController {
             }
         }
     }
+    
+    // MARK: UI configure
     
     // Bu metod, UI elemanlarını düzenler.
     func layoutUI(){
@@ -78,11 +82,14 @@ class UserInfoVC: UIViewController {
         ])
     }
     
+    // MARK: Child view Adding process
+    
     // Bu metod, bir child view controller'ı belirtilen containerView'e ekler.
     func add(childVC: UIViewController, to containerView: UIView){
         addChild(childVC)  // Child view controller'ı ekle
         containerView.addSubview(childVC.view)  // Child view'i containerView'e ekle
         childVC.view.frame = containerView.bounds  // Child view'in çerçevesini containerView'in boyutlarına ayarla
+        // .bounds ekran boyutunu alır
         childVC.didMove(toParent: self)  // Child view controller'ın parent'a taşındığını bildir
     }
     
