@@ -73,20 +73,20 @@ class GFUserInfoHeaderVC: UIViewController {
         NSLayoutConstraint.activate([
             // Avatar görüntüsü yerleşimi
             avatarImageView.topAnchor.constraint(equalTo: view.topAnchor, constant: padding),
-            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            avatarImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             avatarImageView.widthAnchor.constraint(equalToConstant: 90),
             avatarImageView.heightAnchor.constraint(equalToConstant: 90),
             
             // Kullanıcı adı etiketi yerleşimi
             usernameLabel.topAnchor.constraint(equalTo: avatarImageView.topAnchor),
             usernameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: textImagePadding),
-            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            usernameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             usernameLabel.heightAnchor.constraint(equalToConstant: 38),
             
             // Kullanıcı tam adı etiketi yerleşimi
             nameLabel.centerYAnchor.constraint(equalTo: avatarImageView.centerYAnchor, constant: 8),
             nameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: textImagePadding),
-            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            nameLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             nameLabel.heightAnchor.constraint(equalToConstant: 20),
             
             // Konum simgesi yerleşimi
@@ -97,14 +97,14 @@ class GFUserInfoHeaderVC: UIViewController {
             
             // Konum etiketi yerleşimi
             locationLabel.centerYAnchor.constraint(equalTo: locationImageView.centerYAnchor),
-            locationLabel.leadingAnchor.constraint(equalTo: locationImageView.trailingAnchor, constant: 5),
-            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            locationLabel.leadingAnchor.constraint(equalTo: locationImageView.trailingAnchor),
+            locationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             locationLabel.heightAnchor.constraint(equalToConstant: 20),
 
             // Biyografi etiketi yerleşimi
             bioLabel.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: textImagePadding),
             bioLabel.leadingAnchor.constraint(equalTo: avatarImageView.leadingAnchor),
-            bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            bioLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             bioLabel.heightAnchor.constraint(equalToConstant: 60),
         ])
     }
