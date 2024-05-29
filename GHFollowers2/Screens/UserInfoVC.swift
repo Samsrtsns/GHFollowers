@@ -38,6 +38,7 @@ class UserInfoVC: UIViewController {
             switch result {  // Ağ çağrısının sonucunu işle
             case .success(let user):  // Başarılı olursa, kullanıcı bilgi başlık görünümünü ekle
                 DispatchQueue.main.async {
+                    //burada child view controllera eklemek için çağrılır
                     self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
                 }
             case .failure(let error):  // Başarısız olursa, hata mesajıyla bir uyarı göster
