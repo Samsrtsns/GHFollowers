@@ -69,6 +69,8 @@ class GFItemInfoView: UIView {
         ])
     }
     
+    // MARK: Set Data
+    
     // Bilgi türüne göre görüntüyü ve başlığı ayarlayan yöntem
     func set(itemInfoType: ItemInfoType, withCount count: Int) {
         // Bilgi türüne göre farklı görüntü ve başlık belirle
