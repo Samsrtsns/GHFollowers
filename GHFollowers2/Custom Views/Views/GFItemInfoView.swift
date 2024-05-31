@@ -75,9 +75,11 @@ class GFItemInfoView: UIView {
     func set(itemInfoType: ItemInfoType, withCount count: Int) {
         // Bilgi türüne göre farklı görüntü ve başlık belirle
         switch itemInfoType {
+            // repos
         case .repos:
             symbolImageView.image = UIImage(systemName: SFSymbols.repos)
             titleLabel.text = "Public Repos"
+            // gists
         case .gists:
             symbolImageView.image = UIImage(systemName: SFSymbols.gists)
             titleLabel.text = "Public Gists"
