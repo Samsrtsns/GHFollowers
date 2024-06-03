@@ -66,7 +66,7 @@ class UserInfoVC: UIViewController {
                 itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),  // Sağ kenar boşluğunu ayarla
             ])
         }
-
+        // şu anlık nerede durduklarını belirlemek için bruada
         itemViewOne.backgroundColor = .systemPink  // Birinci öğe arka plan rengini ayarla
         itemViewTwo.backgroundColor = .systemBlue  // İkinci öğe arka plan rengini ayarla
         
