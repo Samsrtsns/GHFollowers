@@ -6,6 +6,13 @@
 //
 
 import UIKit
+import SafariServices
+
+// Applying protocols for this VC to provide GFItemInfoVC comminicate
+protocol UserInfoVCDelegete : AnyObject {
+    func didTapGitHubProfile(for user : User)
+    func didTapGetFollowers(for user : User)
+}
 
 // Bu sınıf, kullanıcı bilgilerini görüntülemek için bir view controller tanımlar.
 class UserInfoVC: UIViewController {
@@ -40,17 +47,27 @@ class UserInfoVC: UIViewController {
             
             switch result {  // Ağ çağrısının sonucunu işle
             case .success(let user):  // Başarılı olursa, kullanıcı bilgi başlık görünümünü ekle
-                DispatchQueue.main.async {
-                    //burada child view controllera eklemek için çağrılır
-                    self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
-                    self.add(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
-                    self.add(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
-                    self.dateLabel.text = "GitHub Since \(user.createdAt.convertToDisplayFormat())"
-                }
+                DispatchQueue.main.async { self.configureUIElements(with: user) }
             case .failure(let error):  // Başarısız olursa, hata mesajıyla bir uyarı göster
                 self.presentGFAlertOnMainThread(title: "Bir Hata Oluştu", message: error.rawValue, buttonTitle: "Tamam")
             }
         }
+    }
+    
+    // We added delegetes for ItemVC and add function
+    func configureUIElements(with user : User){
+        let repoItemVC = GFRepoItemVC(user: user)
+        // activate delegete for repoItemVC
+        repoItemVC.delegete = self
+        
+        let followerItemVC = GFFollowerItemVC(user: user)
+        // activate delegete for followerItemVC
+        followerItemVC.delegete = self
+        
+        self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+        self.add(childVC: repoItemVC, to: self.itemViewOne)
+        self.add(childVC: followerItemVC, to: self.itemViewTwo)
+        self.dateLabel.text = "GitHub Since \(user.createdAt.convertToDisplayFormat())"
     }
     
     // MARK: UI configure
@@ -103,3 +120,23 @@ class UserInfoVC: UIViewController {
     }
 }
 
+// Using extension provide for the function in the protocols.
+extension UserInfoVC : UserInfoVCDelegete {
+    func didTapGitHubProfile(for user: User) {
+        // Open the safari according to url
+        guard let url = URL(string: user.htmlUrl) else {
+            presentGFAlertOnMainThread(title: "Invalid URL", message: "The url attached to this user is invalid", buttonTitle: "Ok")
+            return}
+        
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.preferredControlTintColor = .systemGreen
+        present(safariVC, animated: true)
+    }
+    
+    func didTapGetFollowers(for user: User) {
+        // Dissmiss VC
+        // Reset collection view and make a network call according to username
+    }
+    
+    
+}

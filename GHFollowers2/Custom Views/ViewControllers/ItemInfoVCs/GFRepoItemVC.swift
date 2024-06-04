@@ -20,4 +20,8 @@ class GFRepoItemVC : GFItemInfoVC {
         actionButton.set(backgroundColor: .systemPurple, title: "Github Profile")
     }
     
+    // Communication was established through Delegate and the function was accessed
+    override func actionButtonTapped() {
+        delegete.didTapGitHubProfile(for: user)
+    }
 }
