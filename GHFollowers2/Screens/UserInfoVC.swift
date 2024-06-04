@@ -13,6 +13,7 @@ class UserInfoVC: UIViewController {
     var headerView = UIView()          // Başlık bölümü için UIView
     var itemViewOne = UIView()         // Birinci öğe bölümü için UIView
     var itemViewTwo = UIView()         // İkinci öğe bölümü için UIView
+    var dateLabel = GFBodyLabel(textAlignment: .center)
     var itemViews: [UIView] = []       // Tüm öğe görünümlerini tutmak için dizi
     var username: String!              // Kullanıcı adını tutacak özellik
     
@@ -44,6 +45,7 @@ class UserInfoVC: UIViewController {
                     self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
                     self.add(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
                     self.add(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
+                    self.dateLabel.text = "GitHub Since \(user.createdAt.convertToDisplayFormat())"
                 }
             case .failure(let error):  // Başarısız olursa, hata mesajıyla bir uyarı göster
                 self.presentGFAlertOnMainThread(title: "Bir Hata Oluştu", message: error.rawValue, buttonTitle: "Tamam")
@@ -55,7 +57,7 @@ class UserInfoVC: UIViewController {
     
     // Bu metod, UI elemanlarını düzenler.
     func layoutUI(){
-        itemViews = [headerView, itemViewOne, itemViewTwo]  // Öğeleri diziye ekle
+        itemViews = [headerView, itemViewOne, itemViewTwo,dateLabel]  // Öğeleri diziye ekle
         let padding: CGFloat = 20  // Kenar boşluğu
         let itemHeight: CGFloat = 180  // Öğe yüksekliği
         
@@ -77,7 +79,10 @@ class UserInfoVC: UIViewController {
             itemViewOne.heightAnchor.constraint(equalToConstant: itemHeight),  // Birinci öğenin yüksekliğini ayarla
             
             itemViewTwo.topAnchor.constraint(equalTo: itemViewOne.bottomAnchor, constant: padding),  // İkinci öğenin üst konumunu ayarla
-            itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight)  // İkinci öğenin yüksekliğini ayarla
+            itemViewTwo.heightAnchor.constraint(equalToConstant: itemHeight),  // İkinci öğenin yüksekliğini ayarla
+            
+            dateLabel.topAnchor.constraint(equalTo: itemViewTwo.bottomAnchor, constant: padding),
+            dateLabel.heightAnchor.constraint(equalToConstant: 18),
         ])
     }
     

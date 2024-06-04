@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Parent ItemInfo classı
+// Parent ItemInfo class
 class GFItemInfoVC: UIViewController {
     
     let stackView = UIStackView()
