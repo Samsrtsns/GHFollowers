@@ -14,10 +14,23 @@ class GFItemInfoVC: UIViewController {
     let itemInfoViewOne = GFItemInfoView()
     let itemInfoViewTwo = GFItemInfoView()
     let actionButton = GFButton()
-
+    
+    var user: User! // Kullanıcı verilerini tutan User nesnesi
+    
+    // Kullanıcı nesnesini kabul eden özel başlatıcı
+    init(user: User) {
+        super.init(nibName: nil, bundle: nil)
+        self.user = user // Kullanıcı verileri atanıyor
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("Unsupported")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackgroundView()
+        configureStackView()
         layoutUI()
     }
     
@@ -26,7 +39,7 @@ class GFItemInfoVC: UIViewController {
         view.backgroundColor = .secondarySystemBackground
     }
     
-    // StackView için bazı özellştirmeler ve içine eklenecek viewlar
+    // StackView için bazı özelleştirmeler ve içine eklenecek viewlar
     private func configureStackView(){
         stackView.axis = .horizontal
         stackView.distribution = .equalSpacing
@@ -44,7 +57,7 @@ class GFItemInfoVC: UIViewController {
         let padding : CGFloat = 20
         
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor , constant: padding),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor , constant: 40),
             stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor , constant: padding),
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor , constant: -padding),
             stackView.heightAnchor.constraint(equalToConstant: 50),

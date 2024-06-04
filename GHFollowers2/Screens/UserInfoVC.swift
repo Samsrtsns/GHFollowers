@@ -42,6 +42,8 @@ class UserInfoVC: UIViewController {
                 DispatchQueue.main.async {
                     //burada child view controllera eklemek için çağrılır
                     self.add(childVC: GFUserInfoHeaderVC(user: user), to: self.headerView)
+                    self.add(childVC: GFRepoItemVC(user: user), to: self.itemViewOne)
+                    self.add(childVC: GFFollowerItemVC(user: user), to: self.itemViewTwo)
                 }
             case .failure(let error):  // Başarısız olursa, hata mesajıyla bir uyarı göster
                 self.presentGFAlertOnMainThread(title: "Bir Hata Oluştu", message: error.rawValue, buttonTitle: "Tamam")
@@ -55,7 +57,7 @@ class UserInfoVC: UIViewController {
     func layoutUI(){
         itemViews = [headerView, itemViewOne, itemViewTwo]  // Öğeleri diziye ekle
         let padding: CGFloat = 20  // Kenar boşluğu
-        let itemHeight: CGFloat = 140  // Öğe yüksekliği
+        let itemHeight: CGFloat = 180  // Öğe yüksekliği
         
         for itemView in itemViews {  // Her bir öğe için
             view.addSubview(itemView)  // Görünüme öğeyi ekle
@@ -66,9 +68,6 @@ class UserInfoVC: UIViewController {
                 itemView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),  // Sağ kenar boşluğunu ayarla
             ])
         }
-        // şu anlık nerede durduklarını belirlemek için bruada
-        itemViewOne.backgroundColor = .systemPink  // Birinci öğe arka plan rengini ayarla
-        itemViewTwo.backgroundColor = .systemBlue  // İkinci öğe arka plan rengini ayarla
         
         NSLayoutConstraint.activate([
             headerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),  // Başlık görünümünün üst konumunu ayarla
