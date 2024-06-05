@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import SafariServices
 
 // Applying protocols for this VC to provide GFItemInfoVC comminicate
 protocol UserInfoVCDelegete : AnyObject {
@@ -23,6 +22,7 @@ class UserInfoVC: UIViewController {
     var dateLabel = GFBodyLabel(textAlignment: .center)
     var itemViews: [UIView] = []       // Tüm öğe görünümlerini tutmak için dizi
     var username: String!              // Kullanıcı adını tutacak özellik
+    weak var delegete: FollowerListVCDelegete!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -128,14 +128,16 @@ extension UserInfoVC : UserInfoVCDelegete {
             presentGFAlertOnMainThread(title: "Invalid URL", message: "The url attached to this user is invalid", buttonTitle: "Ok")
             return}
         
-        let safariVC = SFSafariViewController(url: url)
-        safariVC.preferredControlTintColor = .systemGreen
-        present(safariVC, animated: true)
+            presentSafariVc(with: url)
     }
     
     func didTapGetFollowers(for user: User) {
-        // Dissmiss VC
-        // Reset collection view and make a network call according to username
+        guard  user.followers != 0 else {
+            presentGFAlertOnMainThread(title: "No Followers", message: "This user has no followers. What a shame.🥲", buttonTitle:  "OK")
+            return
+        }
+        delegete.didRequestFollower(with: user.login)
+        dismissVC()
     }
     
     

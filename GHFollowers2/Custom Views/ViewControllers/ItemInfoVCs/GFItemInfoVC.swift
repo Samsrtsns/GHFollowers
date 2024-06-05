@@ -17,7 +17,7 @@ class GFItemInfoVC: UIViewController {
     
     var user: User! // Kullanıcı verilerini tutan User nesnesi
     // Added delegete here cause this VC is parent class for both GFRepoVC and GFFollowersVC
-    var delegete: UserInfoVCDelegete! // delegete object
+    weak var delegete: UserInfoVCDelegete! // delegete object
     
     // Kullanıcı nesnesini kabul eden özel başlatıcı
     init(user: User) {

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SafariServices
 
 // Bu kod, UIViewController'a ek işlevsellik kazandırmak için bir extension tanımlar.
 // UIViewController, UIKit framework'ünde tüm view controller'ların temelini oluşturur.
@@ -40,6 +41,13 @@ extension UIViewController {
             // Oluşturduğumuz alert view controller'ı sunar (present).
             // animated: true ile geçişin animasyonlu olmasını sağlarız.
         }
+    }
+    
+    // A funciton to load safari Vc
+    func presentSafariVc(with url : URL){
+        let safariVC = SFSafariViewController(url: url)
+        safariVC.preferredControlTintColor = .systemGreen
+        present(safariVC, animated: true)
     }
     
     /// // Yükleme göstergesini (loading indicator) göstermek için bir fonksiyon tanımlıyoruz.
